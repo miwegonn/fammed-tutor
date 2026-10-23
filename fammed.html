@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ติว Fammed — MED50 กอง 2</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Sarabun","Noto Sans Thai",sans-serif;background:#0f1419;color:#e8eaed;line-height:1.65;padding:0 0 60px}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px}
+header{background:linear-gradient(135deg,#1a4d5c,#2d6e7e);padding:24px 0 20px;margin-bottom:20px;border-bottom:3px solid #3fa4b8}
+h1{font-size:1.5rem;font-weight:700}
+.sub{opacity:.85;font-size:.9rem;margin-top:4px}
+.countdown{margin-top:10px;font-size:.95rem;background:rgba(0,0,0,.25);display:inline-block;padding:6px 14px;border-radius:20px}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+nav button{background:#1c2530;color:#9fb3c8;border:1px solid #2c3a48;padding:9px 16px;border-radius:8px;cursor:pointer;font-size:.92rem;font-family:inherit;transition:.15s}
+nav button:hover{background:#243040;color:#e8eaed}
+nav button.on{background:#3fa4b8;color:#0f1419;border-color:#3fa4b8;font-weight:600}
+section{display:none}
+section.on{display:block}
+.card{background:#161d26;border:1px solid #253140;border-radius:12px;padding:18px;margin-bottom:14px}
+h2{font-size:1.15rem;margin-bottom:12px;color:#6fd3e6}
+h3{font-size:1rem;margin:14px 0 8px;color:#9fdcea}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+select,.btn{background:#1c2530;color:#e8eaed;border:1px solid #2c3a48;padding:8px 14px;border-radius:8px;font-family:inherit;font-size:.9rem;cursor:pointer}
+.btn.p{background:#3fa4b8;color:#0f1419;font-weight:600;border-color:#3fa4b8}
+.btn:hover{filter:brightness(1.15)}
+.pill{background:#22303d;padding:5px 12px;border-radius:16px;font-size:.85rem}
+.q{font-weight:600;margin-bottom:12px;font-size:1.02rem}
+.q .n{color:#3fa4b8;margin-right:6px}
+.opt{display:block;width:100%;text-align:left;background:#1a222c;border:1px solid #2c3a48;color:#dbe3ea;padding:11px 14px;border-radius:9px;margin-bottom:8px;cursor:pointer;font-family:inherit;font-size:.94rem;transition:.12s}
+.opt:hover:not(:disabled){background:#232e3b;border-color:#3d5468}
+.opt:disabled{cursor:default}
+.opt.ok{background:#14432e;border-color:#2f9e63;color:#b8f2d0}
+.opt.no{background:#4a1d24;border-color:#c0455a;color:#ffc9d1}
+.exp{background:#12262e;border-left:3px solid #3fa4b8;padding:11px 14px;border-radius:0 8px 8px 0;margin-top:10px;font-size:.92rem}
+.exp b{color:#6fd3e6}
+.prog{height:6px;background:#1c2530;border-radius:3px;overflow:hidden;margin-bottom:14px}
+.prog>i{display:block;height:100%;background:linear-gradient(90deg,#3fa4b8,#6fd3e6);width:0;transition:.3s}
+.res{text-align:center;padding:26px}
+.res .big{font-size:2.6rem;font-weight:700;color:#6fd3e6}
+.fc{min-height:190px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:26px;cursor:pointer;background:linear-gradient(135deg,#16232c,#1a2c38);border:1px solid #2c4453}
+.fc .front{font-size:1.15rem;font-weight:600}
+.fc .back{margin-top:16px;padding-top:14px;border-top:1px dashed #3d5468;color:#8ee6f7;font-size:1.05rem;font-weight:600}
+.hint{font-size:.8rem;opacity:.5;margin-top:14px}
+table{width:100%;border-collapse:collapse;font-size:.9rem;margin:8px 0}
+th,td{border:1px solid #2c3a48;padding:7px 9px;text-align:left}
+th{background:#1c2530;color:#9fdcea}
+tr:nth-child(even) td{background:#141b23}
+.adl label{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #212c37;font-size:.92rem}
+.adl select{min-width:150px}
+.tot{font-size:1.6rem;font-weight:700;color:#6fd3e6;text-align:center;margin:12px 0 4px}
+.grp{text-align:center;font-size:1.05rem;padding:10px;border-radius:8px;font-weight:600}
+.g1{background:#14432e;color:#b8f2d0}.g2{background:#4a3c14;color:#f5e0a3}.g3{background:#4a1d24;color:#ffc9d1}
+ul{margin-left:20px}li{margin:5px 0}
+.chk label{display:flex;gap:10px;align-items:flex-start;padding:7px 0;font-size:.93rem;cursor:pointer}
+.chk input{margin-top:5px;flex-shrink:0}
+.warn{background:#3a2410;border-left:3px solid #e0a04a;padding:11px 14px;border-radius:0 8px 8px 0;margin:10px 0;font-size:.92rem}
+@media(max-width:620px){.q{font-size:.97rem}.opt{font-size:.9rem}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<h1>🩺 ติว Fammed — MED50 กอง 2</h1>
+<div class="sub">MCQ ~66 ข้อ + KF 2 ข้อใหญ่ · ข้อสอบออกตรงเคสของกลุ่มเรา</div>
+<div class="countdown" id="cd"></div>
+</div></header>
+
+<div class="wrap">
+<nav>
+<button class="on" data-t="quiz">📝 ทำข้อสอบ</button>
+<button data-t="flash">⚡ Flashcard</button>
+<button data-t="adl">🧮 คิดคะแนน ADL</button>
+<button data-t="kf">📋 สูตรตอบ KF</button>
+<button data-t="num">🔢 ตัวเลขทอง</button>
+</nav>
+
+<!-- QUIZ -->
+<section id="quiz" class="on">
+<div class="card">
+<div class="bar">
+<select id="cat"></select>
+<button class="btn p" id="start">เริ่มทำ</button>
+<button class="btn" id="shuf">สลับข้อ</button>
+<span class="pill" id="score">0 / 0</span>
+<span class="pill" id="timer">00:00</span>
+</div>
+<div class="prog"><i id="pbar"></i></div>
+<div id="qbox"></div>
+</div>
+</section>
+
+<!-- FLASH -->
+<section id="flash">
+<div class="card">
+<div class="bar">
+<select id="fcat"></select>
+<button class="btn" id="fprev">← ก่อนหน้า</button>
+<button class="btn" id="fnext">ถัดไป →</button>
+<span class="pill" id="fpos">1 / 1</span>
+</div>
+<div class="card fc" id="fcard"><div class="front">กดเพื่อเริ่ม</div></div>
+</div>
+</section>
+
+<!-- ADL -->
+<section id="adl">
+<div class="card">
+<h2>🧮 Barthel ADL Index (10 ข้อ · เต็ม 20 คะแนน)</h2>
+<div class="adl" id="adlform"></div>
+<div class="tot" id="adltot">0 / 20</div>
+<div class="grp g3" id="adlgrp">—</div>
+<div class="exp" style="margin-top:14px"><b>วิธีเขียนในกระดาษคำตอบ:</b> "ประเมินด้วย <b>Barthel ADL Index (10 ข้อ เต็ม 20 คะแนน)</b> ได้ <b>__/20</b> → <b>กลุ่มที่ __ (ติดสังคม/ติดบ้าน/ติดเตียง)</b> โดยเสียคะแนนจากข้อ ______ ซึ่งสะท้อนปัญหา ______ · ควรประเมินเสริมด้วย <b>IADL, TUG, MNA, 2Q/9Q</b> เพราะ ADL วัดว่า 'ทำได้' แต่ไม่ได้วัดว่า 'ทำได้อย่างปลอดภัย'"</div>
+<div class="warn"><b>เกณฑ์แปลผล:</b> ≥ 12 = กลุ่มที่ 1 ติดสังคม · 5–11 = กลุ่มที่ 2 ติดบ้าน · ≤ 4 = กลุ่มที่ 3 ติดเตียง<br><b>เกณฑ์ละเอียด:</b> 0–4 total · 5–8 severe · 9–11 moderate · 12–19 slight · 20 independent</div>
+</div>
+<div class="card">
+<h3>IADL (8 ข้อ · เต็ม 8 คะแนน) — ทำเองได้ = 1</h3>
+<div class="adl" id="iadlform"></div>
+<div class="tot" id="iadltot">0 / 8</div>
+<div class="grp g3" id="iadlgrp">—</div>
+<div class="exp"><b>8 = พึ่งพาตนเองได้ดีเยี่ยม · 4–7 = ปานกลาง · 0–3 = มีภาวะพึ่งพา</b><br>⭐ <b>IADL เสื่อมก่อน ADL เสมอ</b> — โดยเฉพาะ "จัดการยา" และ "ดูแลการเงิน" = early marker ของ dementia/MCI</div>
+</div>
+</section>
+
+<!-- KF -->
+<section id="kf">
+<div class="card">
+<h2>📋 สูตรตอบ KF 5 ขั้น</h2>
+<table><tr><th>ขั้น</th><th>ทำอะไร</th></tr>
+<tr><td>1 แยกคน</td><td>ใครบ้างในบ้าน / ใครเป็น index case / <b>ใครเป็น caregiver</b></td></tr>
+<tr><td>2 แยกมิติ</td><td><b>Biological · Psychological · Social · Spiritual</b> (+ System/Role)</td></tr>
+<tr><td>3 ประเมิน</td><td><b>ADL (Barthel 20) + IADL</b> + เครื่องมือที่โจทย์ใบ้ (TUG/MNA/ZBI/9Q)</td></tr>
+<tr><td>4 จัดลำดับ</td><td>Active problem (แก้ก่อน) vs Inactive problem</td></tr>
+<tr><td>5 วางแผน</td><td>แต่ละปัญหาแยก <b>Investigation / Medication / Education</b> + <b>ใครทำ (MDT)</b> + <b>นัดเมื่อไหร่</b></td></tr>
+</table>
+</div>
+<div class="card">
+<h2>✅ Checklist ก่อนส่งกระดาษคำตอบ</h2>
+<div class="chk" id="kfchk"></div>
+</div>
+<div class="card">
+<h2>🏠 INHOMESSS — 9 ตัว</h2>
+<table>
+<tr><th>ตัว</th><th>ประเมินอะไร</th></tr>
+<tr><td><b>I</b> Immobility</td><td>ADL (Barthel 20) + IADL + TUG + bedbound/homebound?</td></tr>
+<tr><td><b>N</b> Nutrition</td><td>จำนวนมื้อ ชนิดอาหาร BMI รอบเอว <b>จำนวนฟัน (≥20 ซี่/4 คู่สบ)</b> MNA</td></tr>
+<tr><td><b>H</b> Home env.</td><td>โครงสร้างบ้าน พื้น บันได ห้องน้ำ ครัว แสงสว่าง การระบายอากาศ</td></tr>
+<tr><td><b>O</b> Other people</td><td>ผู้ดูแลหลัก + <b>ZBI</b> · social support · <b>รายได้</b> · ผู้ตัดสินใจ/Living will</td></tr>
+<tr><td><b>M</b> Medication</td><td><b>ขอดูยาจริง</b> · ยาที่แพทย์สั่ง vs <b>ซื้อเอง/สมุนไพร</b> · adherence · <b>Med Reconciliation</b></td></tr>
+<tr><td><b>E</b> Examination</td><td>V/S · น้ำหนัก/ส่วนสูง/รอบเอว · PE · geriatric assessment forms</td></tr>
+<tr><td><b>S</b> Safety</td><td>บันได พื้น ห้องน้ำ ครัว แสง ปลั๊กไฟ แก๊ส ฝุ่น เสียง อัคคีภัย น้ำดื่ม</td></tr>
+<tr><td><b>S</b> Spiritual</td><td>Faith · Importance · Community · Address (FICA)</td></tr>
+<tr><td><b>S</b> Services</td><td>สิทธิ · อสม./พยาบาลชุมชน · สถานพยาบาลประจำ+ฉุกเฉิน · ระยะทาง · เบี้ยยังชีพ</td></tr>
+</table>
+</div>
+<div class="card">
+<h2>🧭 คำที่ทำให้ได้คะแนน</h2>
+<p style="font-size:.93rem;line-height:2">
+<span class="pill">Comprehensive care</span> <span class="pill">Continuity of care</span> <span class="pill">Coordination of care</span> <span class="pill">Patient-centered</span> <span class="pill">Multidisciplinary team</span> <span class="pill">Caregiver burden</span> <span class="pill">Respite care</span> <span class="pill">Medication reconciliation</span> <span class="pill">Home hazard modification</span> <span class="pill">Advance care planning</span> <span class="pill">Shared decision making</span> <span class="pill">Empowerment</span> <span class="pill">Deprescribing</span>
+</p>
+</div>
+</section>
+
+<!-- NUM -->
+<section id="num"><div class="card"><h2>🔢 ตัวเลขทองที่ต้องท่อง</h2><div id="numtab"></div></div></section>
+</div>
+
+<script>
+/* ---------- COUNTDOWN ---------- */
+(function(){const ex=new Date(2026,6,31,9,0,0);function u(){const d=ex-new Date();if(d<0){cd.textContent="🎯 วันสอบแล้ว — สู้ๆ นะครับ";return}
+const dd=Math.floor(d/864e5),hh=Math.floor(d%864e5/36e5),mm=Math.floor(d%36e5/6e4);cd.textContent=`⏳ เหลืออีก ${dd} วัน ${hh} ชม. ${mm} นาที ถึงวันสอบ (31 ก.ค. 2569)`}u();setInterval(u,3e4)})();
+
+/* ---------- NAV ---------- */
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{
+document.querySelectorAll('nav button').forEach(x=>x.classList.remove('on'));b.classList.add('on');
+document.querySelectorAll('section').forEach(s=>s.classList.remove('on'));
+document.getElementById(b.dataset.t).classList.add('on');window.scrollTo(0,0)});
+
+/* ---------- QUESTION BANK ---------- */
+const Q=[
+["OA","หญิง 78 ปี ปวดเข่า 2 ข้าง ข้อฝืดเช้า 15 นาที crepitus กดเจ็บขอบกระดูก ข้อโตแต่ไม่ร้อน",["ต้อง X-ray ก่อนจึงวินิจฉัยได้","เข้าเกณฑ์วินิจฉัย OA เข่าทางคลินิกแล้ว","ต้องส่ง RF และ anti-CCP","ข้อฝืด 15 นาทีบ่งชี้ RA","ต้องเจาะน้ำในข้อ"],1,"ACR clinical criteria: ปวดเข่า + ≥3/6 (อายุ>50, stiffness<30 นาที, crepitus, bony tenderness, bony enlargement, ไม่ร้อน) — X-ray ไม่จำเป็นถ้า clinical ชัด"],
+["OA","ข้อใด <b>ไม่ใช่</b> เกณฑ์ ACR ของ OA เข่า",["อายุ > 50 ปี","ข้อฝืดเช้า < 30 นาที","Crepitus","คลำได้ความร้อนที่ข้อ","Bony enlargement"],3,"เกณฑ์คือ <b>ไม่มี</b> palpable warmth — ถ้าร้อนต้องนึกถึง septic/inflammatory arthritis"],
+["OA","X-ray ของ OA พบลักษณะใด",["Erosion ขอบข้อ + periarticular osteopenia","Osteophyte + joint space narrowing + subchondral sclerosis","Punched-out lesion","Ankylosis ทั้งข้อ","Chondrocalcinosis เท่านั้น"],1,"จำ <b>LOSS</b>: Loss of joint space, Osteophyte, Subchondral Sclerosis, Subchondral cyst"],
+["OA","ชาย 70 ปี CKD stage 4 (eGFR 22) กิน Aspirin 81 mg ปวดเข่ากำเริบ ยาแก้ปวดใดเหมาะที่สุด",["Ibuprofen 400 mg tid","Naproxen 250 mg bid","Topical diclofenac gel + paracetamol","Celecoxib 200 mg OD","Indomethacin 25 mg tid"],2,"CKD4 + aspirin → <b>ห้าม oral NSAID ทุกชนิดรวม COX-2</b> (GI bleed + AKI) → topical NSAID เป็น first-line ที่ปลอดภัยที่สุดในผู้สูงอายุ"],
+["OA","ข้อใดคือ core treatment ที่ต้องให้ผู้ป่วย OA เข่าทุกราย",["ฉีด hyaluronic acid","Glucosamine sulfate","ลดน้ำหนัก + strengthening quadriceps + ให้ความรู้","Arthroscopic lavage","Tramadol ทุกวัน"],2,"Core = ลดน้ำหนัก + exercise + education · glucosamine/HA/arthroscopic lavage ไม่แนะนำเป็นประจำ"],
+["OA","ผู้ป่วย OA เข่าขวาใช้ไม้เท้า ควรถืออย่างไร",["ข้างเดียวกับเข่าที่ปวด","ข้างตรงข้ามกับเข่าที่ปวด","สองข้างเสมอ","ไม่ควรใช้เพราะทำให้กล้ามเนื้ออ่อนแรง","ใช้เฉพาะเวลาปวดมาก"],1,"ถือ <b>ข้างตรงข้าม</b> เพื่อถ่ายน้ำหนักข้ามลำตัว ลดแรงกดข้อที่ปวด"],
+["CKD","ชาย 70 ปี CKD stage 4 น้ำหนัก 60 kg ยังไม่ล้างไต ควรได้โปรตีนเท่าใด",["0.3 g/kg/วัน","0.6–0.8 g/kg/วัน","1.0–1.2 g/kg/วัน","1.2–1.5 g/kg/วัน","> 1.5 g/kg/วัน"],1,"CKD 3–5 ยังไม่ล้างไต: <b>0.6–0.8 g/kg/d</b> (KDIGO 2024 ~0.8, ห้าม > 1.3)"],
+["CKD","ผู้ป่วยรายเดิมเริ่มฟอกเลือด (HD) สัปดาห์ละ 3 ครั้ง ควรปรับโปรตีนอย่างไร",["ลดเหลือ 0.4 g/kg/วัน","คงที่ 0.6 g/kg/วัน","เพิ่มเป็น ~1.2 g/kg/วัน","งดโปรตีนจากสัตว์","ไม่ต้องคำนวณ"],2,"⭐ กับดักคลาสสิก — <b>ล้างไตแล้วต้องเพิ่มโปรตีนเป็น 1.2 g/kg/d</b> (เสียโปรตีนทาง dialysate)"],
+["CKD","ปริมาณโซเดียมที่แนะนำต่อวันในผู้ป่วย CKD",["< 500 mg","< 1,000 mg","< 2,000 mg (เกลือ < 5 กรัม)","< 3,500 mg","ไม่จำกัดถ้าไม่บวม"],2,"โซเดียม < 2,000 mg/วัน = เกลือ < 5 g ≈ 1 ช้อนชา"],
+["CKD","วิธีลดโพแทสเซียมในผักสำหรับผู้ป่วย CKD ที่มี hyperkalemia",["ผัดไฟแรงน้ำมันมาก","หั่นชิ้นเล็ก แช่น้ำ ≥ 2 ชม. แล้วต้มทิ้งน้ำ","นึ่งโดยไม่ใส่น้ำ","กินผักสด","แช่แข็งก่อนปรุง"],1,"หั่น–แช่–ต้มทิ้งน้ำ ลด K ได้ราว 50%"],
+["CKD","มาตรการใดชะลอไตเสื่อมได้ชัดเจนที่สุดใน CKD ที่มี albuminuria",["วิตามินรวม + folic acid","จำกัดน้ำ 1 ลิตร/วัน","SGLT2 inhibitor ร่วมกับ ACEI/ARB","สมุนไพรขับปัสสาวะ","ยาปฏิชีวนะป้องกัน UTI"],2,"<b>SGLT2i + ACEI/ARB</b> = pillar ของการชะลอไตเสื่อมในปัจจุบัน (ห้ามใช้ ACEI+ARB คู่กัน)"],
+["CKD","Sick day rule ที่ถูกต้องเมื่อผู้ป่วย CKD มีไข้ ท้องเสีย อาเจียน",["เพิ่มยาขับปัสสาวะ","หยุด ACEI/ARB, SGLT2i, metformin, NSAIDs, diuretic ชั่วคราว","เพิ่ม ACEI","ให้ NSAIDs ลดไข้","ไม่ต้องปรับยา"],1,"หยุดยาที่เสี่ยง AKI/lactic acidosis/DKA ชั่วคราวจนกว่าจะกินได้ปกติ"],
+["ล้ม","ปัจจัยใดเป็น predictor ที่แรงที่สุดของการหกล้มซ้ำ",["อายุ > 80 ปี","ประวัติเคยหกล้มมาก่อน","การใช้แว่นสายตา","กระดูกพรุน","อยู่คนเดียว"],1,"⭐ <b>Previous falls = predictor ที่แรงที่สุด</b> — ออกข้อสอบซ้ำๆ"],
+["ล้ม","หญิง 78 ปี ทำ TUG ได้ 18 วินาที แปลผลอย่างไร",["ปกติ","เสี่ยงหกล้มสูง","บ่งชี้สมองเสื่อม","บ่งชี้ซึมเศร้า","บ่งชี้ขาดสารอาหาร"],1,"TUG < 10 = ปกติ · ≥ 12–14 = เสี่ยงล้ม · ≥ 20 = เสี่ยงสูงมาก"],
+["ล้ม","ยากลุ่มใดเพิ่มความเสี่ยงหกล้มมากที่สุด (FRIDs)",["Metformin","Atorvastatin","Lorazepam","Omeprazole","Amoxicillin"],2,"Benzodiazepine อยู่ใน Beers criteria — ataxia, sedation, anterograde amnesia, ล้ม"],
+["ล้ม","การแทรกแซงใดมีหลักฐานดีที่สุดในการลดการหกล้มในชุมชน",["ให้ลดการเดินและใช้รถเข็นแทน","Progressive resistance + balance training","ใส่ hip protector อย่างเดียว","แคลเซียมเสริมขนาดสูง","ติดกล้องวงจรปิด"],1,"Exercise (resistance + balance เช่น Tai Chi/Otago) มีหลักฐานดีที่สุด · การให้งดเดิน = ผิดเสมอ"],
+["ล้ม","Cut-off ของ hand grip strength ตาม AWGS 2019",["ชาย <20, หญิง <12 kg","ชาย <26, หญิง <16 kg","ชาย <28, หญิง <18 kg","ชาย <32, หญิง <22 kg","ชาย <35, หญิง <25 kg"],2,"AWGS 2019: ชาย < 28 kg · หญิง < 18 kg = low muscle strength"],
+["ล้ม","หญิง 78 ปี BMI 30.9 มี OA เข่า ล้ม 14 ครั้งใน 2 ปี ต้องการลดน้ำหนัก คำแนะนำใดเหมาะที่สุด",["ลดพลังงานอย่างเดียว","จำกัดโปรตีนเพื่อลดเร็ว","ลดพลังงาน 500–1,000 kcal/วัน + โปรตีน 1.2–1.5 g/kg + resistance training","ให้ยาลดน้ำหนักทันที","aerobic แรงกระแทกสูง"],2,"Sarcopenic obesity ต้องลดไขมันโดยรักษากล้ามเนื้อ — ลดน้ำหนักอย่างเดียวจะยิ่งเสียกล้ามเนื้อและล้มมากขึ้น"],
+["ล้ม","ผู้สูงอายุหน้ามืดเวลาลุกยืน BP นอน 130/80 ยืน 3 นาที 105/72 แปลผลอย่างไร",["ปกติ","Orthostatic hypotension","White-coat hypertension","Masked hypertension","Hypertensive urgency"],1,"OH = SBP ลด ≥ 20 หรือ DBP ลด ≥ 10 mmHg ภายใน 3 นาทีหลังลุกยืน"],
+["Fasttrack","ชาย 65 ปี เจ็บแน่นหน้าอกร้าวไปกราม 30 นาที เหงื่อแตก สิ่งแรกที่ควรทำ",["ส่ง troponin แล้วรอผล","ทำ EKG 12 leads ภายใน 10 นาที","ให้ยาลดกรดแล้วสังเกตอาการ","ส่ง CXR ก่อน","ให้ SL nitrate แล้วให้กลับบ้าน"],1,"⭐ EKG ภายใน 10 นาที เป็นขั้นแรกเสมอในเจ็บอกสงสัย ACS"],
+["Fasttrack","STEMI ที่ PCU ประเมินว่าส่งไป PCI ใช้เวลา 150 นาที ไม่มีข้อห้าม ควรทำอย่างไร",["ส่งไปทำ primary PCI ทันทีโดยไม่ให้ยา","ให้ยาละลายลิ่มเลือดภายใน 30 นาที แล้วส่งต่อ PCI center ทันที","รอสังเกตอาการ 6 ชั่วโมง","ให้ warfarin แล้วนัดพรุ่งนี้","ให้ยาลดความดันแล้วส่งกลับบ้าน"],1,"> 120 นาที → fibrinolytic ภายใน 30 นาที แล้วส่งต่อ (pharmaco-invasive strategy)"],
+["Fasttrack","ยาใดควรให้ทันทีที่วินิจฉัย STEMI",["Warfarin 5 mg","Aspirin 300 mg เคี้ยว","Furosemide 40 mg IV","Simvastatin 20 mg","Digoxin 0.25 mg"],1,"ISIS-2: aspirin ลด vascular mortality 11.8%→9.4% (~23% RRR) ลด reinfarction ครึ่งหนึ่ง"],
+["Fasttrack","กลไกของ aspirin ในผู้ป่วย STEMI",["ยับยั้ง COX-1 อย่างถาวร → ลด thromboxane A₂","ยับยั้ง vitamin K epoxide reductase","ยับยั้ง factor Xa","ยับยั้ง P2Y12 receptor","กระตุ้น plasminogen"],0,"Irreversible COX-1 inhibition → ↓TXA₂ → ↓platelet aggregation"],
+["Fasttrack","เกณฑ์เวลาของ STEMI Fast Track ข้อใดถูก",["D2N 90 นาที / D2B 180 นาที","D2N 30 นาที / diagnosis-to-balloon 120 นาที","D2N 60 นาที / D2B 60 นาที","EKG 30 นาที / D2B 240 นาที","ไม่มีเกณฑ์แน่นอน"],1,"EKG ≤ 10 นาที · Door-to-Needle ≤ 30 นาที · Diagnosis-to-Balloon ≤ 120 นาที"],
+["Fasttrack","หญิง 62 ปี ปวดหัวข้างเดียวตุบๆ คลื่นไส้ กลัวแสง มี U/D migraine อดนอน 3 คืน BP 185/105 neuro ปกติ",["Hypertensive emergency with encephalopathy","Subarachnoid hemorrhage","Acute migraine attack with reactive hypertension","Giant cell arteritis","Acute angle-closure glaucoma"],2,"Neuro ปกติ ไม่มี HMOD เข้าเกณฑ์ ICHD-3 + trigger ชัด → migraine + reactive HT (ห้ามลด BP เร็ว)"],
+["Fasttrack","ข้อใด <b>ไม่ใช่</b> red flag ตาม SNNOOP10",["ปวดรุนแรงที่สุดในชีวิตแบบฉับพลัน","ปวดครั้งแรกในผู้ป่วยอายุ 65 ปี","ปวดร่วมกับชาแขนขา","ปวดสองข้างแบบบีบรัดเป็นๆ หายๆ มา 3 ปี ลักษณะเดิม","ปวดร่วมกับไข้และคอแข็ง"],3,"Pattern เดิมไม่เปลี่ยน = tension-type ธรรมดา ไม่ใช่ red flag"],
+["Fasttrack","ปวดหลังข้อใดต้องส่งโรงพยาบาลด่วนที่สุด",["ปวดหลังยกของหนักเมื่อวาน เดินปกติ","ปวดเรื้อรัง 6 เดือน","ปวดหลัง + กลั้นปัสสาวะไม่ได้ + ชาแบบ saddle","ปวดร้าวลงขาข้างเดียว ไม่มีอ่อนแรง","ปวดตอนเช้าและดีขึ้นเมื่อขยับ"],2,"Cauda equina syndrome = ฉุกเฉินทางศัลยกรรมประสาท"],
+["Fasttrack","ผู้ป่วยรายใด <b>ไม่เข้าเกณฑ์</b> UCEP",["หมดสติ หายใจเฮือก","แขนขาอ่อนแรงซีกขวาเฉียบพลัน 30 นาที พูดไม่ชัด","เจ็บแน่นหน้าอกเฉียบพลันรุนแรง เหงื่อแตก","ไข้ต่ำๆ ไอเล็กน้อย 2 วัน สัญญาณชีพปกติ","เลือดออกจากแผลไม่หยุด ความดันตก"],3,"UCEP = ภาวะคุกคามชีวิต (สีแดง) เข้า รพ.ใดก็ได้ฟรี 72 ชม.แรก · อาการคงที่ ≠ วิกฤต"],
+["Fasttrack","ชาย 88 ปี ท้องผูก 4 สัปดาห์ น้ำหนักลด 5 กก./3 เดือน Hb 11.5 FOBT positive ควรทำอะไรต่อ",["ให้ยาระบายแล้วนัด 3 เดือน","เพิ่มใยอาหารแล้วนัด 1 เดือน","ส่ง colonoscopy","CT whole abdomen เท่านั้น","ตรวจ TSH แล้วรอผล"],2,"Red flags: น้ำหนักลด + anemia + FOBT+ + ท้องผูก onset ใหม่ในผู้สูงอายุ → สงสัย CRC"],
+["AUDIT","ผู้ป่วยทำ AUDIT ได้ 18 คะแนน ควรจัดการอย่างไร",["ให้สุขศึกษาทั่วไป","Simple advice แล้วนัดปีหน้า","Brief intervention + counseling + ติดตามต่อเนื่อง","ส่งจิตแพทย์ทันที","ไม่ต้องทำอะไร"],2,"AUDIT: 0–7 เสี่ยงต่ำ · 8–15 Brief Advice · 16–19 Brief Intervention · ≥20 refer"],
+["AUDIT","AUDIT คะแนนเท่าใดเข้าข่ายติดสุราและควรส่งต่อ",["≥ 8","≥ 12","≥ 16","≥ 20","≥ 30"],3,"≥ 20 = alcohol dependence → Referral to Treatment"],
+["AUDIT","ข้อใดคือ '1 ดื่มมาตรฐาน'",["เบียร์ 5% 1 กระป๋องเล็ก 330 mL","เบียร์ 5% 1 ขวดใหญ่ 630 mL","ไวน์ 12% 1 แก้ว 250 mL","วิสกี้ 40% 1 แก้ว 100 mL","เหล้าขาว 40% 1 ขวดเล็ก 330 mL"],0,"1 ดื่มมาตรฐาน ≈ แอลกอฮอล์ 10 g = เบียร์ 330 / ไวน์ 100 / เหล้า 30 mL"],
+["AUDIT","ผู้ป่วยลดเบียร์จาก 10 เหลือ 5 กระป๋อง/วัน และตั้งใจเลิกปีใหม่ อยู่ระยะใด",["Precontemplation","Contemplation","Preparation","Action","Maintenance"],2,"ลงมือลดแล้ว + ตั้งใจเลิก = Preparation (ถ้าแค่คิด = Contemplation)"],
+["AUDIT","ผู้สูบบุหรี่บอกว่า 'ยังไม่คิดจะเลิกตอนนี้' ควรใช้แนวทางใด",["5A แล้วกำหนด quit date ทันที","5R เพื่อสร้างแรงจูงใจ","ให้ varenicline ทันที","ไม่ต้องคุยเรื่องบุหรี่อีก","แจ้งว่าถ้าไม่เลิกจะไม่รักษาต่อ"],1,"5R = Relevance, Risks, Rewards, Roadblocks, Repetition"],
+["AUDIT","ข้อใด <b>ไม่ใช่</b> องค์ประกอบของ 5A",["Ask","Advise","Assess","Assist","Assign"],4,"5A = Ask, Advise, Assess, Assist, <b>Arrange</b>"],
+["AUDIT","เลิกบุหรี่ครบ 1 ปี จะเกิดผลใด",["มะเร็งปอดลดครึ่งหนึ่ง","ความเสี่ยง CHD ลดลงประมาณครึ่งหนึ่ง","สมรรถภาพปอดกลับเท่าคนไม่เคยสูบ","stroke เท่าคนไม่สูบ","ไม่มีการเปลี่ยนแปลง"],1,"1 ปี → CHD ลดครึ่ง · 5 ปี → stroke เท่าคนไม่สูบ · 10 ปี → มะเร็งปอดลดครึ่ง"],
+["AUDIT","ผู้ป่วย severe COPD ที่ยังสูบบุหรี่ มาตรการใดเพิ่ม survival",["ยาขยายหลอดลมขนาดสูง","เลิกบุหรี่ (+ LTOT ในผู้มี chronic hypoxia)","ยาปฏิชีวนะป้องกันทุกเดือน","ยาแก้ไอ","สเตียรอยด์กินระยะยาว"],1,"มีเพียง 2 อย่างที่พิสูจน์ว่าเพิ่ม survival ใน COPD"],
+["Zarit","Zarit Burden Interview ฉบับเต็มมีกี่ข้อ คะแนนเต็มเท่าใด",["10 ข้อ เต็ม 40","15 ข้อ เต็ม 60","22 ข้อ เต็ม 88","30 ข้อ เต็ม 120","9 ข้อ เต็ม 27"],2,"22 ข้อ × 0–4 = 88 คะแนน"],
+["Zarit","ผู้ดูแลได้คะแนน Zarit 65 แปลผลอย่างไร",["ไม่มีภาระ","ภาระเล็กน้อย","ภาระปานกลาง","ภาระระดับรุนแรง","เกินคะแนนเต็ม"],3,"0–20 น้อย · 21–40 เล็กน้อย–ปานกลาง · 41–60 ปานกลาง–มาก · 61–88 รุนแรง"],
+["Zarit","ข้อใดจัดเป็น subjective burden",["จำนวนชั่วโมงที่ใช้ดูแล","ค่าใช้จ่ายด้านยา","การต้องลาออกจากงาน","ความรู้สึกวิตกกังวลและโดดเดี่ยว","จำนวนครั้งที่พาไป รพ."],3,"Subjective = ความรู้สึกภายใน · Objective = สิ่งที่วัด/สังเกตได้"],
+["Zarit","เครื่องมือใดใช้ประเมิน family function",["Genogram","Family APGAR","INHOMESSS","Zarit","Barthel Index"],1,"APGAR = Adaptation, Partnership, Growth, Affection, Resolve · 0–10 · <4 บกพร่องรุนแรง"],
+["Zarit","เส้นหยักซิกแซกใน genogram หมายถึงอะไร",["สนิทสนมมาก","ความสัมพันธ์ขัดแย้ง","การหย่าร้าง","การแยกกันอยู่","ห่างเหิน"],1,"เส้นหยัก = conflictual · เส้นคู่ = สนิท · เส้นประ = ห่างเหิน · ขีดขวาง 1/2 เส้น = แยก/หย่า"],
+["Zarit","ผู้สูงอายุได้คะแนน 9Q = 15 แปลผลอย่างไร",["ไม่มีอาการซึมเศร้า","ระดับน้อย","ระดับปานกลาง","ระดับรุนแรง","ต้องทำ 2Q ซ้ำก่อน"],2,"9Q: <7 ไม่มี · 7–12 น้อย · 13–18 ปานกลาง · ≥19 รุนแรง"],
+["Zarit","ลำดับการคัดกรองซึมเศร้า/ฆ่าตัวตายในผู้สูงอายุที่ถูกต้อง",["8Q → 9Q → 2Q","2Q plus → 9Q (หรือ TGDS) → 8Q","9Q → 2Q → TGDS","TGDS → 2Q → 9Q","8Q → TGDS → 2Q"],1,"2Q positive → 9Q → 8Q · 8Q ≥ 17 = เสี่ยงสูง ส่งต่อ"],
+["Zarit","Family APGAR 3 คะแนน แปลผลอย่างไร",["ทำหน้าที่ได้ดี","บกพร่องเล็กน้อย","บกพร่องปานกลาง","บกพร่องรุนแรง","แปลผลไม่ได้"],3,"7–10 ดี · 4–6 ปานกลาง · 0–3 บกพร่องรุนแรง"],
+["DLP","ชาย 70 ปี ischemic stroke จาก atherosclerosis + DM + HT + CKD4 เป้า LDL-C เท่าใด",["< 130 mg/dL","< 100 mg/dL","< 70 mg/dL","< 55 แต่ห้ามใช้ statin","ไม่มีเป้าหมาย"],2,"Stroke <b>ที่มี</b> atherosclerotic disease → LDL < 70 (ถ้าไม่มี = < 100)"],
+["DLP","ผู้ป่วยเดิมได้ Atorvastatin 40 mg ครึ่งเม็ด LDL 103 การปรับที่เหมาะสมที่สุด",["คงยาเดิม","Atorvastatin 40 mg + Ezetimibe 10 mg","เปลี่ยนเป็น Gemfibrozil","หยุด statin เพราะ CKD4","เพิ่ม niacin"],1,"CKD4 → เพิ่ม ezetimibe (ลด LDL อีก ~25%) ดีกว่าดัน statin สูง (เสี่ยง myopathy)"],
+["DLP","ผู้ป่วยใดควรได้ high-intensity statin",["ชาย 50 DM 3 ปี ไม่มีปัจจัยเสี่ยงอื่น","หญิง 60 CKD stage 3a","ชาย 55 มี ACS เมื่อ 1 เดือนก่อน","หญิง 40 Thai CV risk 8%","ชาย 38 LDL 150 ไม่มีปัจจัยเสี่ยง"],2,"ACS = secondary prevention → high-intensity statin ทันที เป้า LDL < 55"],
+["DLP","ข้อใดจัดเป็น high-intensity statin",["Simvastatin 20 mg","Atorvastatin 10 mg","Rosuvastatin 20 mg","Pravastatin 40 mg","Pitavastatin 2 mg"],2,"High = Atorvastatin 40–80 หรือ Rosuvastatin 20 (ลด LDL > 50%)"],
+["DLP","หลังเริ่ม/ปรับ statin ควรเจาะ lipid ซ้ำเมื่อใด",["1 สัปดาห์","4–12 สัปดาห์","6 เดือน","1 ปี","เมื่อมีอาการเท่านั้น"],1,"4–12 สัปดาห์ เพื่อดูประสิทธิภาพและ adherence"],
+["DLP","ผู้ป่วยดื่มสุราหนัก TG 780 mg/dL LDL 120 ควรจัดการอย่างไรเป็นอันดับแรก",["High-intensity statin","Fenofibrate + งดแอลกอฮอล์เด็ดขาด","Gemfibrozil + atorvastatin","Ezetimibe เดี่ยว","ไม่ต้องให้ยา"],1,"TG > 500 → fibrate ทันทีเพื่อกัน acute pancreatitis · ⛔ ห้าม gemfibrozil + statin"],
+["DLP","tendon xanthoma ที่เอ็นร้อยหวายทั้งสองข้าง บ่งชี้ภาวะใด",["Cushing's syndrome","Familial hypercholesterolemia","Hypothyroidism","Nephrotic syndrome","Gout tophi"],1,"Tendon xanthoma = FH เกือบเฉพาะ · xanthelasma หนังตา = hyperlipidemia ทั่วไป"],
+["DLP","ข้อใด <b>ไม่ใช่</b> secondary cause ของ dyslipidemia",["Hypothyroidism","Nephrotic syndrome","Glucocorticoid","Metformin","Thiazide diuretic"],3,"Metformin ไม่ทำให้ DLP (กลับช่วยลด TG เล็กน้อย)"],
+["Hypo","เจาะน้ำตาลได้ 58 mg/dL ใจสั่น เหงื่อแตก รู้สึกตัวดี จัดเป็น hypoglycemia ระดับใด",["Level 1","Level 2","Level 3","ไม่จัดเป็น hypoglycemia","Level 4"],1,"Level 1 = <70 และ ≥54 · <b>Level 2 = <54</b> · Level 3 = ต้องมีคนช่วย"],
+["Hypo","นิยามของ hypoglycemia Level 3 (severe)",["น้ำตาล < 70","น้ำตาล < 54","น้ำตาล < 40","มีการเปลี่ยนแปลงทางสมอง/ร่างกายรุนแรงจนต้องได้รับความช่วยเหลือจากผู้อื่น","< 30 ร่วมกับชัก"],3,"⭐ Level 3 นิยามด้วย 'ต้องมีคนช่วย' ไม่ใช่ตัวเลข — กับดักที่ออกบ่อยที่สุด"],
+["Hypo","การรักษาตาม 'rule of 15' ที่ถูกต้อง",["กลูโคส 50 g แล้วเจาะซ้ำใน 1 ชม.","CHO ออกฤทธิ์เร็ว 15 g รอ 15 นาที เจาะซ้ำ","ช็อกโกแลต 1 แท่ง เจาะซ้ำใน 30 นาที","ข้าว 1 จานทันที","50%DW 50 mL IV ทันที"],1,"ทำซ้ำจนกว่า ≥ 70 แล้วตามด้วย CHO เชิงซ้อน + โปรตีนถ้ามื้อถัดไปยังอีกนาน"],
+["Hypo","อาหารใด <b>ไม่เหมาะ</b> ใช้แก้ภาวะน้ำตาลต่ำ",["น้ำหวาน 180 mL","น้ำตาลทราย 3 ช้อนชา","ไอศกรีมหรือช็อกโกแลต","ลูกอม 3–5 เม็ด","กลูโคสเม็ด 3 เม็ด"],2,"ไขมันสูงทำให้ดูดซึมน้ำตาลช้า"],
+["Hypo","ผู้ป่วยไม่รู้สึกตัว น้ำตาล 32 mg/dL ที่บ้าน ไม่มีเส้นน้ำเกลือ ควรทำอย่างไร",["ป้อนน้ำหวานทางปาก","Glucagon 1 mg IM แล้วนำส่ง รพ.","รอให้ฟื้นเอง","ฉีด insulin","ให้ดื่มนมทางสายยาง"],1,"⚠️ Glucagon ได้ผลไม่ดีใน alcoholic/ตับแข็ง (glycogen store พร่อง)"],
+["Hypo","ผู้สูงอายุเกิด hypoglycemia จาก sulfonylurea หลังแก้ไขแล้วควรทำอย่างไร",["ให้กลับบ้านทันที","รับไว้สังเกตอาการ 24–48 ชั่วโมง","เพิ่มขนาด sulfonylurea","เปลี่ยนเป็น glibenclamide","ให้กินน้ำตาลทุก 2 ชม.ที่บ้าน"],1,"SU ออกฤทธิ์นาน น้ำตาลตกซ้ำได้ · อาจต้อง 10%D/W drip หรือ octreotide"],
+["Hypo","ยาใด <b>ไม่ทำให้เกิด</b> hypoglycemia เมื่อใช้เป็นยาเดี่ยว",["Glipizide","Insulin glargine","Repaglinide","Metformin","Glibenclamide"],3,"Metformin, DPP-4i, GLP-1 RA, SGLT2i, TZD, acarbose ไม่ทำ hypo เมื่อใช้เดี่ยว"],
+["Hypo","ยาใดบดบังอาการเตือนของภาวะน้ำตาลต่ำ",["Amlodipine","Losartan","Atenolol","Enalapril","Hydrochlorothiazide"],2,"β-blocker บดบัง adrenergic symptoms + ยับยั้ง glycogenolysis"],
+["Hypo","ผู้ป่วย DM eGFR 25 ใช้ insulin ควรปรับขนาดอย่างไร",["เพิ่ม 25%","ลดประมาณ 25%","ลดประมาณ 50%","หยุด insulin","ไม่ต้องปรับ"],1,"eGFR 10–50 → ลด ~25% · < 10 → ลด 50%"],
+["Hypo","ข้อใดจัดเป็นอาหาร glycemic index สูง",["วุ้นเส้น","ข้าวกล้อง","ข้าวเหนียว","แอปเปิล","ถั่วเหลือง"],2,"ข้าวเหนียว GI ~90+ · GI ≤55 ต่ำ · ≥70 สูง"],
+["Insulin","Insulin ชนิดใดมี peak ~1 ชม. และนาน 3–4 ชม.",["Regular insulin","Insulin aspart","NPH","Insulin glargine","Insulin degludec"],1,"Rapid-acting (aspart/lispro/glulisine): peak ~1 ชม. / นาน 3–4 ชม."],
+["Insulin","NPH insulin มี peak และ duration ประมาณเท่าใด",["Peak 1 ชม. / 3–4 ชม.","Peak 2 ชม. / 4–6 ชม.","Peak 6–10 ชม. / 10–16 ชม.","ไม่มี peak / 24 ชม.","Peak 12 ชม. / 36 ชม."],2,"RI peak 2 / นาน 4–6 · NPH peak 6–10 / นาน 10–16 · Long ไม่มี peak / 24 ชม."],
+["Insulin","ข้อใด <b>ไม่ใช่</b> ข้อบ่งชี้เริ่ม insulin ใน T2DM",["HbA1c ≥ 10% + อาการ catabolic","FBG ≥ 300 mg/dL","ล้มเหลวจากยากิน 3 ชนิดขนาดสูงสุด","HbA1c 7.4% คุมได้ด้วยยากิน 1 ชนิด","ตั้งครรภ์และคุมด้วยพฤติกรรมไม่ได้"],3,"A1c 7.4% คุมได้ = ยังไม่มีข้อบ่งชี้"],
+["Insulin","เมื่อผสม regular insulin กับ NPH ในไซริงค์เดียว ควรทำอย่างไร",["ดูด NPH (ขุ่น) ก่อน","ดูด regular (ใส) ก่อน แล้วจึงดูด NPH (ขุ่น)","ดูดพร้อมกัน","ห้ามผสมเด็ดขาด","ผสมในขวดแยกก่อน"],1,"⭐ 'ใสก่อนขุ่น' (clear before cloudy) — กัน NPH ปนเปื้อนขวด RI"],
+["Insulin","การเก็บ insulin ที่เปิดใช้แล้วที่ถูกต้อง",["ช่องแช่แข็งได้ 3 เดือน","อุณหภูมิห้อง (< 30°C) ไม่เกิน 28–30 วัน","ตู้เย็นช่องธรรมดาตลอดอายุยา","เก็บในรถได้","วางริมหน้าต่างให้โดนแดด"],1,"ยังไม่เปิด: 2–8°C · เปิดแล้ว: อุณหภูมิห้อง 28–30 วัน · ห้ามแช่แข็ง"],
+["Insulin","ฉีด insulin ตำแหน่งเดิมซ้ำๆ จนเกิดก้อนนูนใต้ผิวหนัง ปัญหาที่ตามมาคือ",["การดูดซึมไม่แน่นอน ทำให้คุมน้ำตาลได้ยาก","ติดเชื้อรุนแรงเสมอ","insulin ออกฤทธิ์เร็วขึ้นมาก","เกิด insulin allergy","ไม่มีผลใดๆ"],0,"Lipohypertrophy → ป้องกันโดยหมุนเวียนตำแหน่งห่างกัน ≥ 1 นิ้ว"],
+["Insulin","น้ำตาลเช้าสูงทุกวัน เจาะตอนตี 3 ได้ 48 mg/dL ควรทำอย่างไร",["เพิ่ม basal insulin ก่อนนอน","ลด basal insulin ก่อนนอน และ/หรือให้ของว่างก่อนนอน","เพิ่ม rapid-acting มื้อเย็น","เพิ่ม metformin มื้อเย็น","ไม่ต้องทำอะไร"],1,"ตี 3 ต่ำ = Somogyi → ลด basal · ตี 3 ปกติ/สูง = Dawn → เพิ่ม basal"],
+["Insulin","ผู้ป่วย DM 66 ปี CKD stage 3a (eGFR 53) HbA1c 7.4% ยาใดควรเป็นตัวเลือกแรกร่วมกับ metformin",["Glibenclamide","Pioglitazone","SGLT2 inhibitor","Sliding-scale insulin","Acarbose"],2,"DM + CKD → SGLT2i เป็น first drug of choice (ชะลอไต + ลด CV event)"],
+["Insulin","ผู้ป่วย DM eGFR 28 ข้อใดถูกต้องเกี่ยวกับ metformin",["ใช้ได้เต็มขนาด 2,000 mg/วัน","ใช้ได้ไม่เกิน 1,000 mg/วัน","ห้ามใช้","ใช้ได้แต่ต้องร่วมกับ insulin","ใช้ได้วันเว้นวัน"],2,"eGFR 30–45 ใช้ได้ ≤ 1,000 mg/d · <b>< 30 ห้ามใช้</b> (lactic acidosis)"],
+["Insulin","ผู้สูงอายุ 82 ปี โรคเรื้อรัง 4 โรค พึ่งพา ADL บางส่วน มีประวัติ hypo 2 ครั้ง เป้า HbA1c ที่เหมาะสม",["< 6.0%","< 6.5%","< 7.0%","< 8.0%","< 9.5%"],3,"ผู้สูงอายุซับซ้อนปานกลาง + ประวัติ hypo → A1c < 8.0%"],
+["KF","ประเมิน ADL ด้วย Barthel ได้ 8/20 ผู้ป่วยอยู่กลุ่มใด",["กลุ่มที่ 1 ติดสังคม","กลุ่มที่ 2 ติดบ้าน","กลุ่มที่ 3 ติดเตียง","ปกติ","ประเมินไม่ได้"],1,"≥ 12 ติดสังคม · 5–11 ติดบ้าน · ≤ 4 ติดเตียง"],
+["KF","Barthel ADL Index ฉบับไทยมีกี่ข้อ คะแนนเต็มเท่าใด",["8 ข้อ เต็ม 16","10 ข้อ เต็ม 20","10 ข้อ เต็ม 100","12 ข้อ เต็ม 24","5 ข้อ เต็ม 9"],1,"10 ข้อ เต็ม 20 คะแนน (ฉบับสากลบางแบบใช้ 100 คะแนน)"],
+["KF","ข้อใดจัดเป็น IADL ไม่ใช่ basic ADL",["อาบน้ำ","แต่งตัว","จัดการยาและการเงิน","กลั้นปัสสาวะ","เคลื่อนย้ายจากเตียงไปเก้าอี้"],2,"IADL = งานที่ใช้สมอง/ทักษะซับซ้อน · <b>IADL เสื่อมก่อน ADL เสมอ</b>"],
+["KF","ผู้ป่วยรายใดควรได้รับการเยี่ยมบ้านมากที่สุด",["ผู้ป่วย HT ที่คุมได้ดี","ผู้ป่วยติดเตียงหลัง stroke","ผู้ป่วยเบาหวานที่มาตามนัดสม่ำเสมอ","ผู้ป่วยเป็นหวัด","นักเรียนที่ปวดท้องประจำเดือน"],1,"ติดเตียง/พิการรุนแรง/ระยะท้าย/อยู่คนเดียวไร้ผู้ดูแล/readmit บ่อย"],
+["KF","การเยี่ยมบ้านครั้งแรก ข้อใดถูกต้องที่สุด",["ไปเมื่อมีเวลาว่าง","ต้องมีเป้าหมาย วางแผนล่วงหน้า และขอความยินยอม","ไปโดยไม่ต้องแจ้งเพื่อดูสภาพจริง","ไปคนเดียวเสมอเพื่อความเป็นส่วนตัว","เน้นตรวจร่างกายอย่างเดียว"],1,"มีเป้าหมาย + วางแผน + consent + ทบทวนเวชระเบียน + คำนึงถึงความปลอดภัยของทีม"],
+["KF","สิ่งใดใน INHOMESSS ควรแก้ด่วนที่สุดในผู้ป่วยหลัง stroke ที่เสี่ยงล้ม",["จัดยาให้เป็นระเบียบ","เปลี่ยนหลอดไฟให้สว่าง","พื้นลื่นและไม่มีราวจับในห้องน้ำ","ทำความสะอาดตู้เย็น","ปลูกต้นไม้หน้าบ้าน"],2,"Fall hazard ที่อันตรายที่สุดและแก้ได้เร็ว"],
+["KF","ผู้ดูแลที่เป็นญาติสายตรงและไม่ได้รับค่าตอบแทน จัดเป็นประเภทใด",["Formal caregiver","Informal / primary caregiver","Professional caregiver","Respite caregiver","Secondary formal caregiver"],1,"ญาติ = informal/primary · บุคลากรวิชาชีพ = formal"],
+["KF","Intermediate care มีเป้าหมายอะไร",["ดูแลระยะท้ายที่บ้าน","ฟื้นฟูสมรรถภาพหลังพ้นระยะเฉียบพลันก่อนกลับสู่ชุมชน","รักษาโรคเฉียบพลันใน ICU","ป้องกันโรคในคนปกติ","คัดกรองมะเร็ง"],1,"กลุ่มหลัก: stroke, TBI, SCI · ภายใน 6 เดือนแรก (golden period)"],
+["KF","ผู้ป่วยขาดนัดบ่อยเพราะมา รพ. แล้วขาดรายได้ ควรทำอย่างไร",["ตำหนิและเตือนว่าจะเกิดภาวะแทรกซ้อน","สำรวจอุปสรรคจริงและแก้เชิงระบบ (ย้ายมาปฐมภูมิ/รับยาใกล้บ้าน/นัดนอกเวลา/อสม.ติดตาม)","หยุดจ่ายยาจนกว่าจะมาตามนัด","ส่งต่อ รพ.ที่ใหญ่กว่า","ให้ยาปริมาณมากไปเลย 1 ปี"],1,"เป็นปัญหาเชิงโครงสร้าง (social determinants) ไม่ใช่ non-compliance ของผู้ป่วย"],
+["FM","สถานการณ์ใดแสดงถึง Comprehensive care มากที่สุด",["ส่งต่อ รพ.ศูนย์เมื่อ PCU ทำไม่ได้","คัดกรอง รักษา และฉีดวัคซีนในผู้ป่วยเบาหวานรายเดียวกัน","แพทย์คนเดิมดูแลมา 10 ปี","เปิดบริการนอกเวลาราชการ","ประสานสังคมสงเคราะห์หางานให้ผู้พิการ"],1,"Comprehensive = ครบทุกมิติ (ส่งเสริม+ป้องกัน+รักษา+ฟื้นฟู) ในคนคนเดียว"],
+["FM","'ผมคิดว่าติดเชื้อจากสระว่ายน้ำ' เป็นการแสดง illness ด้านใดของ IFFE",["Idea","Feeling","Function","Expectation","ไม่ใช่ IFFE"],0,"IFFE = Idea (คิดว่าเป็นอะไร), Feeling, Function, Expectation"],
+["FM","แพทย์ฟังเรื่องเศร้าของผู้ป่วยแล้วร้องไห้และขอหยุดตรวจ ตรงกับข้อใด",["Empathy","Sympathy","Transference","Countertransference","Rapport"],3,"Countertransference = แพทย์เอาอารมณ์ตัวเองเข้าไปจนกระทบการดูแล"],
+["FM","หมอจะปรับยา แต่ผู้ป่วยขอปรับพฤติกรรมก่อน แล้วหมอตกลง ตรงกับข้อใด",["Understanding the whole person","Finding common ground","Being realistic","Enhancing the relationship","Incorporating prevention"],1,"Finding common ground / shared decision making"],
+["FM","ผู้ป่วยได้ยาที่แพ้ แต่เภสัชกรจับได้ก่อนจ่าย จัดเป็นอะไร",["Near miss","No-harm event","Adverse event","Sentinel event","Medication error ที่ไม่ต้องรายงาน"],0,"ยังไม่ถึงผู้ป่วย = near miss · ถึงแต่ไม่เสียหาย = no-harm · เสียหาย = adverse event"],
+["FM","การเฝ้าระวัง HIV โดยให้บางโรงพยาบาลเฉพาะเก็บข้อมูล เป็นการเฝ้าระวังแบบใด",["Active surveillance","Passive surveillance","Sentinel surveillance","Syndromic surveillance","Event-based surveillance"],2,"Sentinel = ใช้จุดเฝ้าระวังตัวแทนบางแห่ง"],
+["FM","หน่วยงานใดเป็นผู้ซื้อบริการ (purchaser) ในระบบหลักประกันสุขภาพถ้วนหน้า",["กระทรวงสาธารณสุข","สปสช.","สช.","สรพ.","สสส."],1,"สปสช. = purchaser · สธ. = provider · สช. = ธรรมนูญสุขภาพ · สรพ. = HA"],
+["FM","การใช้ 'ฝังเข็ม' ร่วมกับการกินยาแผนปัจจุบัน จัดเป็นอะไร",["Alternative medicine","Complementary medicine","Integrative medicine","Traditional medicine","Quaternary prevention"],1,"ใช้ 'ร่วมกับ' = Complementary · ใช้ 'แทน' = Alternative · ผสานอย่างเป็นระบบ = Integrative"],
+["FM","วัคซีนใดเป็น live attenuated vaccine",["Hepatitis B","MMR","DTaP","Influenza ชนิดฉีด","HPV"],1,"Live: MMR, VZV, BCG, OPV, rotavirus, LAIV, JE live · ห้ามในหญิงตั้งครรภ์"],
+["FM","แปลผล HBsAg −, anti-HBs +, anti-HBc − หมายถึงอะไร",["ติดเชื้อเรื้อรัง","ภูมิคุ้มกันจากวัคซีน","เคยติดเชื้อธรรมชาติและหายแล้ว","ติดเชื้อเฉียบพลัน","ไม่เคยติดและไม่มีภูมิ"],1,"anti-HBs+ เดี่ยว (anti-HBc−) = ภูมิจากวัคซีน · ถ้า anti-HBc+ ด้วย = เคยติดเชื้อธรรมชาติ"],
+["FM","หลักการควบคุมสิ่งคุกคาม 'ณ ทางผ่าน (along the path)' ตรงกับข้อใด",["เปลี่ยนเครื่องจักรที่เสียงเบากว่า","ติดตั้งระบบระบายอากาศและฉากกั้นเสียง","ให้พนักงานใส่ ear plug","หมุนเวียนงาน","ตรวจสมรรถภาพการได้ยินประจำปี"],1,"Source → Path (ระบายอากาศ/กั้น) → Receiver (PPE ได้ผลน้อยที่สุด)"],
+["FM","อุปกรณ์ใดใช้วัดปริมาณเสียงสะสมรายบุคคลตลอดกะงาน",["Sound level meter","Noise dosimeter","Octave band analyzer","Audiometer","Anemometer"],1,"Dosimeter = personal dose · Sound level meter = area · NIHL ตรวจพบเร็วสุดที่ 4,000 Hz"],
+["FM","สิ่งคุกคามสุขภาพใดสำคัญที่สุดต่อบุคลากรทางการแพทย์ในไทย",["เสียงดัง","Blood-borne exposure จากเข็มตำ/สัมผัสเลือด","รังสี","ความร้อน","ฝุ่นละออง"],1,"HBV ~30% > HCV ~3% > HIV ~0.3% ต่อการถูกเข็มตำ 1 ครั้ง"],
+["FM","หลักการ primary care ที่สำคัญที่สุดต่อ global health",["การผ่าตัดที่ทันสมัย","ยาใหม่ราคาแพง","การเข้าถึงบริการและโครงการวัคซีน","เทคโนโลยีขั้นสูง","นโยบายระหว่างประเทศ"],2,"Alma-Ata 1978 'Health for All' + UHC — เน้นการเข้าถึงและการป้องกัน"]
+];
+
+/* ---------- FLASHCARDS ---------- */
+const F=[
+["ADL","Barthel ADL Index มีกี่ข้อ คะแนนเต็มเท่าใด","10 ข้อ · เต็ม 20 คะแนน"],
+["ADL","เกณฑ์แบ่งกลุ่มผู้สูงอายุจาก Barthel ADL","≥12 ติดสังคม · 5–11 ติดบ้าน · ≤4 ติดเตียง"],
+["ADL","IADL 8 ข้อ แปลผลอย่างไร","8 = ดีเยี่ยม · 4–7 = ปานกลาง · 0–3 = มีภาวะพึ่งพา"],
+["ADL","Chula ADL Index กี่ข้อ กี่คะแนน","5 ข้อ · เต็ม 9 · 0–4 พึ่งพา / 5–8 บางส่วน / 9 อิสระ"],
+["ADL","IADL กับ ADL อะไรเสื่อมก่อน","IADL เสื่อมก่อนเสมอ (โดยเฉพาะจัดการยา + การเงิน = early marker ของ dementia)"],
+["เครื่องมือ","TUG เท่าไหร่ถือว่าเสี่ยงล้ม","≥ 12–14 วินาที เริ่มเสี่ยง · ≥ 20 วินาที เสี่ยงสูงมาก (ปกติ < 10)"],
+["เครื่องมือ","Morse Fall Scale แปลผล","0–24 ต่ำ · 25–44 ปานกลาง · ≥45 เสี่ยงสูง"],
+["เครื่องมือ","MNA short form แปลผล","12–14 ปกติ · 8–11 เสี่ยงขาดสารอาหาร · 0–7 ขาดสารอาหาร (≤11 ต้องทำ full form)"],
+["เครื่องมือ","MNA full form แปลผล","24–30 ปกติ · 17–23.5 เสี่ยง · < 17 ขาดสารอาหาร"],
+["เครื่องมือ","Zarit Burden Interview","22 ข้อ · เต็ม 88 · 0–20 / 21–40 / 41–60 / 61–88 รุนแรง"],
+["เครื่องมือ","9Q แปลผล","<7 ไม่มี · 7–12 น้อย · 13–18 ปานกลาง · ≥19 รุนแรง"],
+["เครื่องมือ","8Q แปลผล","1–8 เสี่ยงน้อย · 9–16 ปานกลาง · ≥17 เสี่ยงสูง (ส่งต่อ)"],
+["เครื่องมือ","TGDS-30 แปลผล","0–12 ปกติ · 13–18 เล็กน้อย · 19–24 ปานกลาง · ≥25 รุนแรง"],
+["เครื่องมือ","Family APGAR","5 ข้อ · เต็ม 10 · 7–10 ดี · 4–6 ปานกลาง · 0–3 บกพร่องรุนแรง"],
+["เครื่องมือ","SARC-F cut-off","≥ 4 = สงสัย sarcopenia"],
+["เครื่องมือ","Hand grip (AWGS 2019)","ชาย < 28 kg · หญิง < 18 kg"],
+["เครื่องมือ","Calf circumference","ชาย < 34 cm · หญิง < 33 cm"],
+["เครื่องมือ","5-times chair stand","> 12 วินาที = ผิดปกติ"],
+["เครื่องมือ","TMSE cut-off สงสัยสมองเสื่อม","≤ 23 / 30"],
+["เครื่องมือ","Braden scale เสี่ยงแผลกดทับ","≤ 18 (≤ 12 เสี่ยงสูงมาก)"],
+["INHOMESSS","INHOMESSS ย่อมาจากอะไร","Immobility · Nutrition · Home environment · Other people · Medication · Examination · Safety · Spiritual · Services"],
+["CKD","โปรตีนใน CKD 3–5 ยังไม่ล้างไต","0.6–0.8 g/kg/วัน (ห้าม > 1.3)"],
+["CKD","โปรตีนเมื่อล้างไตแล้ว","เพิ่มเป็น 1.2 g/kg/วัน (กลับทาง!)"],
+["CKD","โซเดียมใน CKD","< 2,000 mg/วัน = เกลือ < 5 กรัม ≈ 1 ช้อนชา"],
+["CKD","พลังงานใน CKD","30–35 kcal/kg/วัน (≥60 ปี ใช้ 30)"],
+["CKD","Metformin กับ eGFR","30–45 → ≤ 1,000 mg/วัน · < 30 → ห้ามใช้"],
+["CKD","ปรับ insulin ตาม eGFR","10–50 → ลด 25% · < 10 → ลด 50%"],
+["DLP","เป้า LDL ใน ACS","< 55 mg/dL และลด ≥ 50%"],
+["DLP","เป้า LDL ใน CCS / stroke+atherosclerosis / DM+risk≥2","< 70 mg/dL"],
+["DLP","เป้า LDL ใน DM+risk 0–1 / CKD 3a–5 อายุ ≥50","< 100 mg/dL"],
+["DLP","High-intensity statin คืออะไร","Atorvastatin 40–80 หรือ Rosuvastatin 20 (ลด LDL > 50%)"],
+["DLP","Ezetimibe ลด LDL เพิ่มเท่าไหร่","~25% · ⭐ ใน CKD 4–5 ใช้สูตรผสมตั้งแต่แรก"],
+["DLP","TG เท่าไหร่ให้ fibrate ทันที","> 500 mg/dL (กัน acute pancreatitis) · ⛔ ห้าม gemfibrozil + statin"],
+["DLP","Friedewald ใช้ไม่ได้เมื่อไหร่","TG > 400 mg/dL"],
+["Hypo","Hypoglycemia Level 1 / 2 / 3","L1: <70 และ ≥54 · L2: <54 · L3: ต้องมีคนช่วย (ไม่ระบุตัวเลข)"],
+["Hypo","Rule of 15","CHO ออกฤทธิ์เร็ว 15 g → รอ 15 นาที → เจาะซ้ำ (ทำซ้ำจนกว่า ≥70)"],
+["Hypo","Hypo จาก sulfonylurea ต้องทำอย่างไร","Admit สังเกตอาการ ≥ 24–48 ชั่วโมง"],
+["Hypo","ยานอกกลุ่ม DM ที่ทำให้น้ำตาลต่ำ","β-blocker (บดบังอาการ), quinolone, quinine, ACEI, salicylate สูง, แอลกอฮอล์, Bactrim, fluconazole"],
+["Insulin","Rapid-acting peak/duration","Peak ~1 ชม. / นาน 3–4 ชม."],
+["Insulin","Regular insulin (RI) peak/duration","Peak ~2 ชม. / นาน 4–6 ชม."],
+["Insulin","NPH peak/duration","Peak 6–10 ชม. / นาน 10–16 ชม."],
+["Insulin","Long-acting (glargine/detemir)","ไม่มี peak / นาน ~24 ชม."],
+["Insulin","ผสม insulin ในไซริงค์เดียว","ดูดใสก่อนขุ่น (clear before cloudy)"],
+["Insulin","เก็บ insulin ที่เปิดใช้แล้ว","อุณหภูมิห้อง < 30°C ไม่เกิน 28–30 วัน (ยังไม่เปิด 2–8°C ห้ามแช่แข็ง)"],
+["Insulin","ข้อบ่งชี้เริ่ม insulin ใน T2DM","A1c ≥ 10% หรือ FBG ≥ 300 · ล้มเหลวยากิน 3 ตัว · ผ่าตัด/ตั้งครรภ์ · ตับ-ไตวาย"],
+["Insulin","Dawn vs Somogyi แยกอย่างไร","เจาะน้ำตาลตี 2–3 · ต่ำ = Somogyi (ลด basal) · ปกติ/สูง = Dawn (เพิ่ม basal)"],
+["Fasttrack","เวลาทองของ STEMI","EKG ≤ 10 นาที · Door-to-Needle ≤ 30 นาที · Diagnosis-to-Balloon ≤ 120 นาที"],
+["Fasttrack","Aspirin loading ใน STEMI","300 mg เคี้ยวทันที (ยับยั้ง COX-1 ถาวร → ↓TXA₂)"],
+["Fasttrack","rt-PA window ใน ischemic stroke","4.5 ชั่วโมง (EVT ถึง 6–24 ชม. ด้วย perfusion imaging)"],
+["Fasttrack","UCEP ครอบคลุมอะไร","ฉุกเฉินวิกฤต (สีแดง) เข้า รพ.ใดก็ได้ ไม่เสียเงิน 72 ชั่วโมงแรก"],
+["Fasttrack","SNNOOP10 คืออะไร","Red flags ของอาการปวดศีรษะ — Systemic, Neoplasm, Neuro deficit, Onset sudden, Older age + P1–P10"],
+["Fasttrack","Cauda equina syndrome","กลั้นปัสสาวะ/อุจจาระไม่ได้ + saddle anesthesia + ขาอ่อนแรง = ฉุกเฉิน"],
+["AUDIT","AUDIT bands","0–7 เสี่ยงต่ำ · 8–15 Brief Advice · 16–19 Brief Intervention · ≥20 refer"],
+["AUDIT","1 ดื่มมาตรฐาน = ?","แอลกอฮอล์ 10 g = เบียร์ 5% 330 mL / ไวน์ 12% 100 mL / เหล้า 40% 30 mL"],
+["AUDIT","5A ของการเลิกบุหรี่","Ask · Advise · Assess · Assist · Arrange"],
+["AUDIT","5R ใช้เมื่อไหร่","เมื่อผู้ป่วยยังไม่พร้อมเลิก — Relevance, Risks, Rewards, Roadblocks, Repetition"],
+["AUDIT","เลิกบุหรี่ 1 ปี / 10 ปี","1 ปี CHD risk ลดครึ่ง · 10 ปี มะเร็งปอดลดครึ่ง"],
+["OA","ACR criteria ของ OA เข่า","ปวดเข่า + ≥3 ใน 6: อายุ>50, stiffness<30 นาที, crepitus, bony tenderness, bony enlargement, ไม่ร้อน"],
+["OA","X-ray ของ OA (LOSS)","Loss of joint space · Osteophyte · Subchondral Sclerosis · Subchondral cyst"],
+["OA","First-line ยาแก้ปวด OA ในผู้สูงอายุ","Topical NSAID (ปลอดภัยที่สุด) → paracetamol → oral NSAID ระยะสั้น"],
+["ล้ม","Predictor ที่แรงที่สุดของการล้ม","ประวัติเคยล้มมาก่อน"],
+["ล้ม","Intervention ที่ลดการล้มได้ดีที่สุด","Progressive resistance + balance training (Tai Chi / Otago)"],
+["ทั่วไป","เป้าลดน้ำหนัก","5–10% ของน้ำหนักตัว ใน 6 เดือน (ตัวหลอกคือ 1–2%)"],
+["ทั่วไป","BMI เกณฑ์เอเชีย","<18.5 ผอม · 18.5–22.9 ปกติ · 23–24.9 ท้วม · 25–29.9 อ้วน 1 · ≥30 อ้วน 2"],
+["ทั่วไป","รอบเอวเกณฑ์อ้วนลงพุง","ชาย ≥ 90 cm · หญิง ≥ 80 cm (= ส่วนสูง ÷ 2)"],
+["ทั่วไป","GI / GL","GI ≤55 ต่ำ, ≥70 สูง · GL ≤10 ต่ำ, ≥20 สูง · GL = GI × CHO(g) ÷ 100"],
+["ทั่วไป","สัดส่วนจานอาหารลดพุง","2:1:1 = ผัก 2 : ข้าว 1 : เนื้อ 1"],
+["ทั่วไป","เป้า BP ในผู้ป่วย DM/CKD/CAD/stroke","< 130/80 mmHg"],
+["ทั่วไป","DM remission","HbA1c < 6.5% ต่อเนื่อง ≥ 3 เดือน โดยไม่ใช้ยาลดน้ำตาล"]
+];
+
+/* ---------- GOLD NUMBERS ---------- */
+const N=[
+["ADL / เยี่ยมบ้าน",[["Barthel ADL","10 ข้อ · เต็ม 20"],["กลุ่มผู้สูงอายุ","≥12 ติดสังคม · 5–11 ติดบ้าน · ≤4 ติดเตียง"],["IADL","8 ข้อ · 8 ดีเยี่ยม / 4–7 ปานกลาง / 0–3 พึ่งพา"],["Chula ADL","5 ข้อ เต็ม 9"],["TUG","<10 ปกติ · ≥12–14 เสี่ยง · ≥20 เสี่ยงสูง"],["Morse Fall Scale","0–24 / 25–44 / ≥45 เสี่ยงสูง"],["MNA short / full","12–14 ปกติ ; 24–30 ปกติ"],["Zarit","22 ข้อ เต็ม 88 · ≥61 รุนแรง"],["Family APGAR","5 ข้อ เต็ม 10 · <4 บกพร่องรุนแรง"],["9Q / 8Q","9Q ≥19 รุนแรง · 8Q ≥17 เสี่ยงสูง"],["TGDS-30","≥25 รุนแรง"],["TMSE","≤23 สงสัยสมองเสื่อม"],["Braden","≤18 เสี่ยงแผลกดทับ"]]],
+["CKD / โภชนาการ",[["โปรตีน (ยังไม่ล้างไต)","0.6–0.8 g/kg/d"],["โปรตีน (ล้างไตแล้ว)","1.2 g/kg/d"],["โซเดียม","< 2,000 mg/d (เกลือ < 5 g)"],["พลังงาน","30–35 kcal/kg/d"],["ฟอสฟอรัส","800–1,000 mg/d"],["Metformin","eGFR 30–45 ≤1,000 mg/d · <30 ห้าม"],["Insulin","eGFR 10–50 ลด 25% · <10 ลด 50%"]]],
+["DLP",[["ACS","LDL < 55"],["CCS / stroke+atherosclerosis / DM+risk≥2","LDL < 70"],["DM+risk 0–1 / CKD3a–5 ≥50 ปี","LDL < 100"],["High-intensity statin","Atorva 40–80 · Rosuva 20"],["Ezetimibe","ลด LDL เพิ่ม ~25%"],["Fibrate ทันที","TG > 500"],["Friedewald ใช้ไม่ได้","TG > 400"],["เจาะ lipid ซ้ำ","4–12 สัปดาห์"]]],
+["DM / Hypoglycemia",[["Hypo Level 1","< 70 และ ≥ 54"],["Hypo Level 2","< 54"],["Hypo Level 3","ต้องมีคนช่วย (ไม่ระบุตัวเลข)"],["Rule of 15","CHO 15 g → 15 นาที → เจาะซ้ำ"],["50%DW","50 mL IV push"],["Glucagon","1 mg IM"],["SU hypo","admit ≥ 24–48 ชม."],["Rapid insulin","peak 1 ชม. / 3–4 ชม."],["RI","peak 2 ชม. / 4–6 ชม."],["NPH","peak 6–10 ชม. / 10–16 ชม."],["Long-acting","ไม่มี peak / 24 ชม."],["ข้อบ่งชี้ insulin T2DM","A1c ≥10% หรือ FBG ≥300"],["เป้า A1c ผู้สูงอายุซับซ้อนปานกลาง","< 8.0%"],["DM remission","A1c <6.5% ≥3 เดือน ไม่ใช้ยา"],["GI / GL","≤55 / ≥70 ; ≤10 / ≥20"]]],
+["Fast track / ฉุกเฉิน",[["EKG ใน STEMI","≤ 10 นาที"],["Door-to-Needle","≤ 30 นาที"],["Diagnosis-to-Balloon","≤ 120 นาที"],["Aspirin loading","300 mg เคี้ยว"],["rt-PA window","4.5 ชั่วโมง"],["UCEP","ฟรี 72 ชั่วโมงแรก"],["KPI ตายจาก STEMI","< 8%"]]],
+["พฤติกรรม / ทั่วไป",[["AUDIT","8–15 BA · 16–19 BI · ≥20 refer"],["1 ดื่มมาตรฐาน","แอลกอฮอล์ 10 g"],["เลิกบุหรี่ 1 ปี","CHD risk ลดครึ่ง"],["ลดน้ำหนัก","5–10% ใน 6 เดือน"],["BMI เอเชีย","≥23 ท้วม · ≥25 อ้วน 1 · ≥30 อ้วน 2"],["รอบเอว","ชาย ≥90 · หญิง ≥80 cm"],["เป้า BP (DM/CKD/CAD)","< 130/80"],["Hand grip","ชาย <28 · หญิง <18 kg"],["SARC-F","≥ 4"],["OA morning stiffness","< 30 นาที (RA > 60)"]]]
+];
+
+/* ---------- QUIZ ENGINE ---------- */
+let pool=[],idx=0,sc=0,t0=null,tid=null;
+const cats=[...new Set(Q.map(q=>q[0]))];
+cat.innerHTML='<option value="">ทุกหมวด ('+Q.length+' ข้อ)</option>'+cats.map(c=>`<option value="${c}">${c} (${Q.filter(q=>q[0]===c).length})</option>`).join('');
+function build(){pool=Q.filter(q=>!cat.value||q[0]===cat.value).map((q,i)=>({q,i}));idx=0;sc=0;render();startT()}
+function startT(){clearInterval(tid);t0=Date.now();tid=setInterval(()=>{const s=Math.floor((Date.now()-t0)/1000);timer.textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')},1000)}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a}
+function render(){
+score.textContent=`${sc} / ${idx}`;pbar.style.width=(pool.length?idx/pool.length*100:0)+'%';
+if(idx>=pool.length){clearInterval(tid);const p=pool.length?Math.round(sc/pool.length*100):0;
+let m=p>=85?'🎉 พร้อมสอบแล้ว!':p>=70?'👍 ดีมาก ทบทวนหมวดที่ผิด':p>=55?'📚 ต้องอ่านชีทซ้ำทั้งหมด':'🔥 โฟกัสไฟล์ 01 และ 04 ก่อน';
+qbox.innerHTML=`<div class="res"><div class="big">${sc} / ${pool.length}</div><div style="font-size:1.2rem;margin:8px 0">${p}%</div><div style="margin-bottom:18px">${m}</div><button class="btn p" onclick="build()">ทำใหม่</button></div>`;return}
+const{q}=pool[idx];
+qbox.innerHTML=`<div class="q"><span class="n">${idx+1}/${pool.length}</span><span class="pill" style="font-size:.75rem;margin-right:8px">${q[0]}</span>${q[1]}</div>
+<div id="opts">${q[2].map((o,i)=>`<button class="opt" data-i="${i}">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}</div>
+<div id="fb"></div>`;
+document.querySelectorAll('#opts .opt').forEach(b=>b.onclick=()=>{
+const pick=+b.dataset.i,ans=q[3];
+document.querySelectorAll('#opts .opt').forEach((x,i)=>{x.disabled=true;if(i===ans)x.classList.add('ok');else if(i===pick)x.classList.add('no')});
+if(pick===ans)sc++;
+fb.innerHTML=`<div class="exp"><b>${pick===ans?'✅ ถูกต้อง':'❌ ตอบ '+String.fromCharCode(65+ans)}</b> — ${q[4]}</div><button class="btn p" style="margin-top:12px" id="nx">ข้อถัดไป →</button>`;
+score.textContent=`${sc} / ${idx+1}`;
+nx.onclick=()=>{idx++;render()}})}
+start.onclick=build;cat.onchange=build;shuf.onclick=()=>{build();shuffle(pool);render()};build();
+
+/* ---------- FLASHCARD ---------- */
+let fp=[],fi=0,fflip=false;
+const fcats=[...new Set(F.map(f=>f[0]))];
+fcat.innerHTML='<option value="">ทุกหมวด ('+F.length+' ใบ)</option>'+fcats.map(c=>`<option value="${c}">${c}</option>`).join('');
+function fbuild(){fp=F.filter(f=>!fcat.value||f[0]===fcat.value);fi=0;fflip=false;frender()}
+function frender(){if(!fp.length)return;const f=fp[fi];fpos.textContent=`${fi+1} / ${fp.length}`;
+fcard.innerHTML=`<div style="font-size:.8rem;opacity:.55;margin-bottom:10px">${f[0]}</div><div class="front">${f[1]}</div>${fflip?`<div class="back">${f[2]}</div>`:'<div class="hint">แตะการ์ดเพื่อดูคำตอบ</div>'}`}
+fcard.onclick=()=>{fflip=!fflip;frender()};
+fnext.onclick=()=>{fi=(fi+1)%fp.length;fflip=false;frender()};
+fprev.onclick=()=>{fi=(fi-1+fp.length)%fp.length;fflip=false;frender()};
+fcat.onchange=fbuild;fbuild();
+
+/* ---------- ADL CALCULATOR ---------- */
+const ADL=[
+["1. Feeding — รับประทานอาหาร",[["0 ตักเองไม่ได้ ต้องป้อน",0],["1 ตักเองได้แต่ต้องมีคนช่วย",1],["2 ตักเองได้ทั้งหมด",2]]],
+["2. Grooming — ล้างหน้า หวีผม แปรงฟัน",[["0 ต้องช่วย",0],["1 ทำเองได้",1]]],
+["3. Transfer — ลุกนั่งจากเตียงไปเก้าอี้",[["0 ไม่สามารถ ต้องใช้ ≥2 คนยก",0],["1 ต้องการคนช่วยมาก",1],["2 ต้องการคนช่วยเล็กน้อย/คุมความปลอดภัย",2],["3 ทำเองได้",3]]],
+["4. Toilet use — ใช้ห้องน้ำ",[["0 ช่วยตัวเองไม่ได้",0],["1 ทำได้บ้าง ต้องการคนช่วย",1],["2 ทำเองได้",2]]],
+["5. Mobility — เคลื่อนที่ภายในบ้าน",[["0 เคลื่อนที่ไม่ได้",0],["1 ใช้รถเข็นช่วยตัวเองได้",1],["2 เดินโดยมีคนช่วย",2],["3 เดินเองได้ (อาจใช้ walker/ไม้เท้า)",3]]],
+["6. Dressing — สวมใส่เสื้อผ้า",[["0 ต้องมีคนสวมให้",0],["1 ช่วยตัวเองได้ราวครึ่งหนึ่ง",1],["2 ช่วยตัวเองได้ดี",2]]],
+["7. Stairs — ขึ้นลงบันได 1 ชั้น",[["0 ไม่สามารถ",0],["1 ต้องการคนช่วย",1],["2 ขึ้นลงได้เอง",2]]],
+["8. Bathing — อาบน้ำ",[["0 ต้องมีคนช่วย",0],["1 อาบน้ำเองได้",1]]],
+["9. Bowel — กลั้นอุจจาระ",[["0 กลั้นไม่ได้/ต้องสวน",0],["1 กลั้นไม่ได้บางครั้ง (<1 ครั้ง/สัปดาห์)",1],["2 กลั้นได้ปกติ",2]]],
+["10. Bladder — กลั้นปัสสาวะ",[["0 กลั้นไม่ได้/คาสายสวนแต่ดูแลเองไม่ได้",0],["1 กลั้นไม่ได้บางครั้ง (<1 ครั้ง/วัน)",1],["2 กลั้นได้ปกติ",2]]]
+];
+adlform.innerHTML=ADL.map((a,i)=>`<label><span>${a[0]}</span><select data-a="${i}">${a[1].map(o=>`<option value="${o[1]}">${o[0]}</option>`).join('')}</select></label>`).join('');
+function adlCalc(){let t=0;document.querySelectorAll('#adlform select').forEach(s=>t+=+s.value);
+adltot.textContent=t+' / 20';const g=adlgrp;
+if(t>=12){g.className='grp g1';g.textContent='กลุ่มที่ 1 — ติดสังคม (ช่วยเหลือตัวเองได้ ไม่จำเป็นต้องมีผู้ดูแลประจำ)'}
+else if(t>=5){g.className='grp g2';g.textContent='กลุ่มที่ 2 — ติดบ้าน (ช่วยเหลือและดูแลตนเองได้บ้าง)'}
+else{g.className='grp g3';g.textContent='กลุ่มที่ 3 — ติดเตียง (ช่วยเหลือตัวเองไม่ได้ ต้องการผู้ดูแลตลอดเวลา)'}}
+adlform.onchange=adlCalc;
+
+const IADL=["ใช้โทรศัพท์","เดินทาง/ใช้ขนส่งสาธารณะ","ซื้อของ/จ่ายตลาด","เตรียม/ทำอาหาร","ทำงานบ้าน","ซักรีด","รับประทานยาเอง","ดูแลการเงิน"];
+iadlform.innerHTML=IADL.map((x,i)=>`<label><span>${i+1}. ${x}</span><select data-i="${i}"><option value="0">0 ต้องช่วย/ทำไม่ได้</option><option value="1">1 ทำเองได้</option></select></label>`).join('');
+function iadlCalc(){let t=0;document.querySelectorAll('#iadlform select').forEach(s=>t+=+s.value);
+iadltot.textContent=t+' / 8';const g=iadlgrp;
+if(t===8){g.className='grp g1';g.textContent='พึ่งพาตนเองได้ดีเยี่ยม'}
+else if(t>=4){g.className='grp g2';g.textContent='พึ่งพาตนเองได้ปานกลาง (ต้องการความช่วยเหลือเล็กน้อย)'}
+else{g.className='grp g3';g.textContent='มีภาวะพึ่งพา'}}
+iadlform.onchange=iadlCalc;adlCalc();iadlCalc();
+
+/* ---------- KF CHECKLIST ---------- */
+const CHK=["เขียนครบ 4 มิติ (Bio / Psycho / Social / Spiritual) — ไม่ใช่แค่ Biological","เขียนถึง <b>ผู้ดูแล</b> ด้วย ไม่ใช่แค่ผู้ป่วย","ระบุ <b>ชื่อเครื่องมือ + คะแนน + การแปลผล + กลุ่ม</b> เมื่อพูดถึง ADL","ใส่ <b>ตัวเลข/เกณฑ์</b> ทุกที่ที่ใส่ได้","มี <b>Non-pharmacological ก่อน Pharmacological</b>","ระบุ <b>ทีมสหวิชาชีพ</b> อย่างน้อย 3–4 วิชาชีพ","มี <b>home hazard / INHOMESSS</b>","มี <b>แผนติดตาม (follow-up) พร้อมช่วงเวลา</b>","ถามให้กี่ข้อ <b>เขียนครบตามจำนวน</b>","เขียนเป็น <b>bullet ไม่ใช่เรียงความ</b>"];
+kfchk.innerHTML=CHK.map((c,i)=>`<label><input type="checkbox"><span>${c}</span></label>`).join('');
+
+/* ---------- GOLD NUMBERS TABLE ---------- */
+numtab.innerHTML=N.map(g=>`<h3>${g[0]}</h3><table>${g[1].map(r=>`<tr><td style="width:45%">${r[0]}</td><td><b>${r[1]}</b></td></tr>`).join('')}</table>`).join('');
+</script>
+</body>
+</html>
